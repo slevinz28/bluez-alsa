@@ -110,6 +110,8 @@ struct ba_transport_pcm {
 	/* Overall PCM delay in 1/10 of millisecond, caused by
 	 * audio encoding or decoding and data transfer. */
 	unsigned int delay;
+	/* Client delay in 1/10 of millisecond. */
+	unsigned int client_delay;
 
 	/* internal software volume control */
 	bool soft_volume;
@@ -369,6 +371,9 @@ bool ba_transport_pcm_is_active(
 
 int ba_transport_pcm_get_delay(
 		const struct ba_transport_pcm *pcm);
+int ba_transport_pcm_set_delay(
+		struct ba_transport_pcm *pcm,
+		int delay);
 
 unsigned int ba_transport_pcm_volume_level_to_bt(
 		const struct ba_transport_pcm *pcm,

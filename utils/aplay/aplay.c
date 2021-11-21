@@ -607,6 +607,27 @@ static void *pcm_worker_routine(struct pcm_worker *w) {
 		/* move leftovers to the beginning and reposition tail */
 		ffb_shift(&buffer, frames * w->ba_pcm.channels);
 
+		snd_pcm_sframes_t delay_frames;
+		if ((ret = snd_pcm_delay(w->pcm, &delay_frames)) != 0)
+			warn("Couldn't get PCM delay: %s", snd_strerror(ret));
+		else {
+
+			const int delay = delay_frames * 10000 / w->ba_pcm.sampling;
+			if (abs(delay - w->ba_pcm.client_delay) >= 500 /* update if >= 50ms */) {
+
+				w->ba_pcm.client_delay = delay;
+
+				DBusError err = DBUS_ERROR_INIT;
+				if (!bluealsa_dbus_pcm_update(&dbus_ctx, &w->ba_pcm, BLUEALSA_PCM_CLIENT_DELAY, &err)) {
+					error("Couldn't update PCM: %s", err.message);
+					dbus_error_free(&err);
+					goto fail;
+				}
+
+			}
+
+		}
+
 	}
 
 fail:

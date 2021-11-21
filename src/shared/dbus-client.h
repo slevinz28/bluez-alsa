@@ -82,6 +82,7 @@ struct ba_service_props {
 /**
  * BlueALSA PCM object property. */
 enum ba_pcm_property {
+	BLUEALSA_PCM_CLIENT_DELAY,
 	BLUEALSA_PCM_SOFT_VOLUME,
 	BLUEALSA_PCM_VOLUME,
 };
@@ -116,6 +117,8 @@ struct ba_pcm {
 	char codec[16];
 	/* approximate PCM delay */
 	dbus_uint16_t delay;
+	/* approximate client delay */
+	dbus_uint16_t client_delay;
 	/* software volume */
 	dbus_bool_t soft_volume;
 

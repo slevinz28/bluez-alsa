@@ -122,6 +122,13 @@ Properties      object Device [readonly]
 
                         Approximate PCM delay in 1/10 of millisecond.
 
+                uint16 ClientDelay [readwrite]
+
+                        Approximate client side delay in 1/10 of millisecond.
+                        This property shall be set by the client in order to
+                        account for the client side delay when capturing or
+                        playing audio respectively for PCM source or sink.
+
                 boolean SoftVolume [readwrite]
 
                         This property determines whether BlueALSA will make

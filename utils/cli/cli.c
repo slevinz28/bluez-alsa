@@ -218,6 +218,7 @@ static void print_properties(const struct ba_pcm *pcm, DBusError *err) {
 	print_codecs(pcm->pcm_path, err);
 	printf("Selected codec: %s\n", pcm->codec);
 	printf("Delay: %#.1f ms\n", (double)pcm->delay / 10);
+	printf("ClientDelay: %#.1f ms\n", (double)pcm->client_delay / 10);
 	printf("SoftVolume: %s\n", pcm->soft_volume ? "Y" : "N");
 	print_volume(pcm);
 	print_mute(pcm);
