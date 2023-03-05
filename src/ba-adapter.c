@@ -1,6 +1,6 @@
 /*
  * BlueALSA - ba-adapter.c
- * Copyright (c) 2016-2019 Arkadiusz Bokowy
+ * Copyright (c) 2016-2023 Arkadiusz Bokowy
  *
  * This file is a part of bluez-alsa.
  *
@@ -159,24 +159,22 @@ void ba_adapter_unref(struct ba_adapter *a) {
 
 int ba_adapter_get_hfp_features_hf(struct ba_adapter *a) {
 	int features = config.hfp.features_rfcomm_hf;
-	if (BA_TEST_ESCO_SUPPORT(a)) {
 #if ENABLE_MSBC
-		if (config.hfp.codecs.msbc)
-			features |= HFP_HF_FEAT_CODEC;
+	if (config.hfp.codecs.msbc)
+		features |= HFP_HF_FEAT_CODEC;
 #endif
+	if (BA_TEST_ESCO_SUPPORT(a))
 		features |= HFP_HF_FEAT_ESCO;
-	}
 	return features;
 }
 
 int ba_adapter_get_hfp_features_ag(struct ba_adapter *a) {
 	int features = config.hfp.features_rfcomm_ag;
-	if (BA_TEST_ESCO_SUPPORT(a)) {
 #if ENABLE_MSBC
-		if (config.hfp.codecs.msbc)
-			features |= HFP_AG_FEAT_CODEC;
+	if (config.hfp.codecs.msbc)
+		features |= HFP_AG_FEAT_CODEC;
 #endif
+	if (BA_TEST_ESCO_SUPPORT(a))
 		features |= HFP_AG_FEAT_ESCO;
-	}
 	return features;
 }
